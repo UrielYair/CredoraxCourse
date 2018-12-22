@@ -1,4 +1,4 @@
-package org.hit.fintech2018.Yair;
+package org.hit.fintech2018.Yair.Assighnment1;
 
 public interface ILuhnChecker
 {
