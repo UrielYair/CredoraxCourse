@@ -5,7 +5,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Auxiliaries
 {
@@ -75,5 +74,23 @@ public class Auxiliaries
         //for (int i=0;i<amountOfDigits;i++)
         //    result[i] = source[i];
         return result;
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+
+        byte[] data = new byte[s.length() / 2];
+        for (int i = 0; i < s.length(); i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+
+    public static void printByteArray(byte[] arr){
+        for (byte b :
+                arr) {
+            System.out.print(b);
+        }
+        System.out.println();
     }
 }
