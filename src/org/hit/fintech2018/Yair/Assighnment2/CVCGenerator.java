@@ -7,6 +7,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.*;
+import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.printByteArray;
 
 public class CVCGenerator implements ICVCGenerator
 {
@@ -42,9 +43,13 @@ public class CVCGenerator implements ICVCGenerator
                     block2[i%16]=concatenated[i];
             }
 
+            System.out.println("Block1:");
+            printByteArray(block1);
+            System.out.println("Block2:");
+            printByteArray(block2);
             //*************************************************
             //Step 4: Encrypt block 1 with key 1.
-            byte[] step4Result = encrypt(block1,key1,"DES");
+            byte[] step4Result = encryptDES(block1,key1,"DES");
 
             //*************************************************
             //Step 5: XOR result of step 4 with block 2.
@@ -52,11 +57,11 @@ public class CVCGenerator implements ICVCGenerator
 
             //*************************************************
             //Step 6: Decrypt the result of step 5 with key 2.
-            byte[] step6Result = decrypt(step5Result,key2,"DES");
+            byte[] step6Result = decryptDES(step5Result,key2,"DES");
 
             //*************************************************
             //Step 7: Encrypt the result of step 6 with key 1.
-            byte[] step7Result = encrypt(step6Result,key1,"DES");
+            byte[] step7Result = encryptDES(step6Result,key1,"DES");
 
             //*************************************************
             //Step 8: Extract digits (0-9) from result of step 7.

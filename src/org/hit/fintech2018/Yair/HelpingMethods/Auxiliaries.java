@@ -30,21 +30,27 @@ public class Auxiliaries
             result[i] = (byte)((int)arrA[i] ^ (int)arrB[i]);
         return result;
     }
-    public static byte[] encrypt(byte[] data, byte[] key, String algorithmType) throws Exception
+    public static byte[] encryptDES(byte[] data, byte[] key, String algorithmType) throws Exception
+    {
+        return encryptOrDecryptWithDES(data, key, algorithmType, true);
+    }
+
+    public static byte[] decryptDES(byte[] data, byte[] key, String algorithmType) throws Exception
+    {
+        return encryptOrDecryptWithDES(data, key, algorithmType, false);
+    }
+
+    private static byte[] encryptOrDecryptWithDES(byte[] data, byte[] key, String algorithmType, boolean toEncrypt) throws Exception
     {
         SecretKey sKey = new SecretKeySpec(key,algorithmType);
-        //Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
         Cipher cipher = Cipher.getInstance("DES");
-        cipher.init(Cipher.ENCRYPT_MODE,sKey);
+        if (toEncrypt)
+            cipher.init(Cipher.ENCRYPT_MODE,sKey);
+        else
+            cipher.init(Cipher.DECRYPT_MODE,sKey);
         return cipher.doFinal(data);
     }
-    public static byte[] decrypt(byte[] data, byte[] key, String algorithmType) throws Exception
-    {
-        SecretKey sKey = new SecretKeySpec(key,algorithmType);
-        Cipher cipher = Cipher.getInstance("DES");
-        cipher.init(Cipher.DECRYPT_MODE,sKey);
-        return cipher.doFinal(data);
-    }
+
     public static byte[] digitsExtraction(byte[] beforeExtract)
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
@@ -87,10 +93,11 @@ public class Auxiliaries
     }
 
     public static void printByteArray(byte[] arr){
-        for (byte b :
-                arr) {
-            System.out.print(b);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (byte b : arr) {
+            stringBuilder.append(String.format("%02X ", b));
         }
-        System.out.println();
+        System.out.println(stringBuilder.toString());
     }
 }
