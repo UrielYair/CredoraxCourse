@@ -9,8 +9,7 @@ import java.util.Arrays;
 
 public class Auxiliaries
 {
-    public static byte[] byteArraysConcat(byte[]...arrays) throws IOException
-    {
+    public static byte[] byteArraysConcat(byte[]...arrays) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         for (byte[] arr : arrays)
             outputStream.write(arr);
@@ -20,7 +19,7 @@ public class Auxiliaries
     public static byte[] rightPadding(byte[] source, int lengthOfNewArray, byte paddingValue)
     {
         byte[] output= new byte[lengthOfNewArray];
-        output=Arrays.copyOf(source,source.length);
+        System.arraycopy(source,0,output,0,source.length);
         for (int i=source.length;i<lengthOfNewArray;i++)
             output[i]=paddingValue;
         return output;
@@ -34,7 +33,7 @@ public class Auxiliaries
     }
     public static byte[] encrypt(byte[] data, byte[] key, String algorithmType) throws Exception
     {
-        SecretKey sKey = (SecretKey) new SecretKeySpec(key,algorithmType);
+        SecretKey sKey = new SecretKeySpec(key,algorithmType);
         //Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
         Cipher cipher = Cipher.getInstance("DES");
         cipher.init(Cipher.ENCRYPT_MODE,sKey);
@@ -42,7 +41,7 @@ public class Auxiliaries
     }
     public static byte[] decrypt(byte[] data, byte[] key, String algorithmType) throws Exception
     {
-        SecretKey sKey = (SecretKey) new SecretKeySpec(key,algorithmType);
+        SecretKey sKey = new SecretKeySpec(key,algorithmType);
         Cipher cipher = Cipher.getInstance("DES");
         cipher.init(Cipher.DECRYPT_MODE,sKey);
         return cipher.doFinal(data);
@@ -69,11 +68,12 @@ public class Auxiliaries
         }
         return afterSubstruction;
     }
-    public static byte[] getNDigitsFromLest(byte[] source,int amountOfDigits)
+    public static byte[] getNDigitsFromLeft(byte[] source, int amountOfDigits)
     {
         byte[] result = new byte[amountOfDigits];
-        for (int i=0;i<amountOfDigits;i++)
-            result[i] = source[i];
+        System.arraycopy(source,0,result,0,amountOfDigits);
+        //for (int i=0;i<amountOfDigits;i++)
+        //    result[i] = source[i];
         return result;
     }
 }

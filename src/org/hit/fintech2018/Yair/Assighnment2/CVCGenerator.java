@@ -2,8 +2,6 @@ package org.hit.fintech2018.Yair.Assighnment2;
 
 
 import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -76,7 +74,7 @@ public class CVCGenerator implements ICVCGenerator
             //*************************************************
             //Step 11: Get specific amount of digits from left of the result of step 10.
 
-            return getNDigitsFromLest(step10Result,digits);
+            return getNDigitsFromLeft(step10Result,digits);
 
         }
         catch (IOException e) {

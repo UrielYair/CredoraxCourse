@@ -26,7 +26,7 @@ public class CVCTest
         byte[] serviceCode = {2, 0, 2};
         byte[] key1={'D',6,7,6,'D','C','F',3,'A','F','B',7,3,5,0,5};
         byte[] key2={3,2,'E','A','F',0,0,'E','A',2,5,3,'D',8,7,5};
-        generator.getCVCValue(pan,expiry,serviceCode,key1,key2,4);
+        System.out.println(generator.getCVCValue(pan,expiry,serviceCode,key1,key2,4));
 
 
     }
