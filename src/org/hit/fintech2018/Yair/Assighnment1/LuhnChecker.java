@@ -1,12 +1,7 @@
 package org.hit.fintech2018.Yair.Assighnment1;
 
-import org.hit.fintech2018.Yair.Assighnment1.ILuhnChecker;
-
 public class LuhnChecker implements ILuhnChecker
 {
-
-    //TODO: fix throwing exceptions in case of detecting 09-90, 22-55, 33-66 or 44-77
-
     public LuhnChecker(){
     }
 
