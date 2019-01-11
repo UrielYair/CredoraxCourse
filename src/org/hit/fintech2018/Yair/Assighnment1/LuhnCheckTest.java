@@ -9,6 +9,7 @@ public class LuhnCheckTest
         try {
             LuhnChecker luhnChecker = new LuhnChecker();
             //Check for Visa, Mastercard, Discover, American Express
+
             String[] cards = {"4201010294522212",
                     "4024007104829261",
                     "4532014403898182",
@@ -37,6 +38,15 @@ public class LuhnCheckTest
                 //System.out.println("the luhn digit calculated: " + luhnChecker.getLuhnDigit(strAsByteArray));
                 System.out.println("valid? " + luhnChecker.isLuhnValid(strAsByteArray));
             }
+
+            //Another numbers by Ilya:
+            String str[] = {"4580000000000000","545865929597828","31234567123456712345671234562"};
+            for (String s:str)
+            {
+                System.out.println(luhnChecker.getLuhnDigit(stringToByteArray(s)));
+            }
+
+
         }
         catch (Exception e)
         {
