@@ -1,5 +1,7 @@
 package org.hit.fintech2018.Yair.Assighnment2;
 
+import java.util.Arrays;
+
 import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.*;
 import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.hexStringToByteArray;
 
@@ -7,7 +9,6 @@ public class CVCTest
 {
     public static void main(String[] args)
     {
-
         /*
         -------------------------------------------------
         Example 1
@@ -23,20 +24,23 @@ public class CVCTest
         Decimalization candidates:2410557405140115
         CVC: 2410
         */
-        CVCGenerator generator = new CVCGenerator();
 
-        byte[] pan =            {4,1,2,3,4,5,0,9,9,0,1,2,2,1,2,9};
-        byte[] expiry =         {0,7,2,1}   ;
-        byte[] serviceCode =    {2,0,2}     ;
-        int digits =             3;
-        byte[] key1 = hexStringToByteArray("D676DCF3AFB73505");
-        byte[] key2 = hexStringToByteArray("32EAF00EA253D875");
-        System.out.println("Key1");
-        printByteArray(key1);
-        System.out.println("Key2");
-        printByteArray(key2);
-        System.out.println(generator.getCVCValue(pan,expiry,serviceCode,key1,key2,digits));
+        try{
+            CVCGenerator generator = new CVCGenerator();
 
+            byte[] pan =            {4,1,2,3,4,5,0,9,9,0,1,2,2,1,2,9};
+            byte[] expiry =         {0,7,2,1}   ;
+            byte[] serviceCode =    {2,0,2}     ;
+            int digits =             4;
+            String k1,k2;
+            k1 = "D676DCF3AFB73505";
+            k2 = "32EAF00EA253D875";
 
+            byte[] key1 = hexStringToByteArray(k1);
+            byte[] key2 = hexStringToByteArray(k2);
+            System.out.println(Arrays.toString(generator.getCVCValue(pan, expiry, serviceCode, key1, key2, digits)));
+
+        }
+        catch (Exception e) { e.printStackTrace();}
     }
 }
