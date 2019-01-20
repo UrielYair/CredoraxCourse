@@ -6,7 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Auxiliaries
@@ -42,6 +41,13 @@ public class Auxiliaries
         }
         return Arrays.copyOf(hexBytes, index);
     }
+    public static   boolean byteArrayChecking(byte[]... args) throws Exception{
+        for (byte[] arr :   args) {
+            if (arr == null)
+                throw new Exception("array can not be null.");
+        }
+        return true;
+    }
 
     public static   byte[]  getNDigitsFromLeft(byte[] source, int amountOfDigits) throws Exception{
         if (source.length<amountOfDigits)
@@ -65,9 +71,8 @@ public class Auxiliaries
         Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
         SecretKey sKey;
 
-        //Todo: get rid of duplicate code!
-
-        if (toEncrypt) {
+        if (toEncrypt)
+        {
             sKey = new SecretKeySpec(key1, "DES");
             cipher.init(Cipher.ENCRYPT_MODE, sKey);
             data = cipher.doFinal(data);
@@ -97,13 +102,8 @@ public class Auxiliaries
     }
 
     // Printing methods:
-    public static   void    printByteArray(byte[] arr){
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (byte b : arr) {
-            stringBuilder.append(String.format("%02X ", b));
-        }
-        System.out.println(stringBuilder.toString());
+    public static   void    printByteArray(byte[] array){
+        System.out.println(byteArrayToHexString(array));
     }
 
     // Converting methods:
@@ -150,6 +150,4 @@ public class Auxiliaries
         }
         return arrayToReturns;
     }
-
-
 }

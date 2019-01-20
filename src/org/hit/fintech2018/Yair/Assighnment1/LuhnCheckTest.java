@@ -40,7 +40,7 @@ public class LuhnCheckTest
             }
 
             //Another numbers by Ilya:
-            String str[] = {"4580000000000000","545865929597828","31234567123456712345671234562"};
+            String str[] = {"4580000000000000","54586592959782","31234567123456712345671234562"};
             for (String s:str)
             {
                 System.out.println(luhnChecker.getLuhnDigit(stringToByteArray(s)));
