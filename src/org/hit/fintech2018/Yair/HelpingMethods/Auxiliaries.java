@@ -48,11 +48,15 @@ public class Auxiliaries
         }
         return true;
     }
-
     public static   byte[]  getNDigitsFromLeft(byte[] source, int amountOfDigits) throws Exception{
         if (source.length<amountOfDigits)
             throw new Exception("The value of the digits to return is too high!.");
         return Arrays.copyOf(source, amountOfDigits);
+    }
+    public static   byte[]  leftPadding(byte[] original, int newSize){
+        byte[] arrayToReturn = null;
+        System.arraycopy(original,0,arrayToReturn,newSize-original.length,original.length);
+        return arrayToReturn;
     }
 
     // Encryption methods:

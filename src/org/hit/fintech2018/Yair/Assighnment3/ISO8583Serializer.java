@@ -1,14 +1,13 @@
 package org.hit.fintech2018.Yair.Assighnment3;
 
+import org.hit.fintech2018.Yair.Converters.AbstractConverter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.unpackToBytesArray;
+
 import static org.hit.fintech2018.Yair.HelpingMethods.BitInformationXMLStAXHandler.getInformationBasedOnBitNumber;
 
 public class ISO8583Serializer implements IISO8583Serializer
@@ -27,12 +26,15 @@ public class ISO8583Serializer implements IISO8583Serializer
         * the bitmap will indicate what other element will be presented in the map.
         */
 
+        // Assuming that each value of data in the key-value pair is valid.
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 
-        List<Integer> dataElements = getElementsFromFirstDataElement(data.get(1));
+        List<Integer> dataElements = getElementsToProcess(data.get(1));
         for (Integer i : dataElements) {
             try {
-                outputStream.write(getBytesFromDataElement(i, data.get(i)));
+                byte[] toAdd = getBytesFromDataElement(i, data.get(i));
+                outputStream.write(toAdd);
             }
             catch (IOException e) {
                 //Todo: check option of changing the body of the catch block.
@@ -48,42 +50,25 @@ public class ISO8583Serializer implements IISO8583Serializer
 
 
             BitInformation infoOfSpecificBit = getInformationBasedOnBitNumber(bitNumber);
-            // The BitInformation have the following members:
-            //      - bitNumber
-            //      - length
-            //      - classPath
-            //      - bitDescription.
-
+            //Todo: fix all class paths in field.xml file. to my classes after implementing them.
             //reflection
             if (infoOfSpecificBit!=null) {
-                Object classConverter = Class.forName(infoOfSpecificBit.getClassPath()).newInstance();
+                AbstractConverter converterInstance = (AbstractConverter) Class.forName(infoOfSpecificBit.getClassPath()).newInstance();
+                converterInstance.setData(data); //Todo: maybe there is no need for convering and only return the array.
+                return converterInstance.convertToHexByte(infoOfSpecificBit.getLength());
 
-                Method convertingMethod = classConverter.getClass().getDeclaredMethod("convertToHexByte", null);
-                return (byte[]) convertingMethod.invoke(classConverter, bitNumber, data);
+                // include data in the class converter object.
+                //Method convertingMethod = classConverter.getClass().getDeclaredMethod("convertToHexByte", null);
+                //return (byte[]) convertingMethod.invoke(classConverter);
             }
             else
                 return null; //Todo: fix and manage correctly all nullable returned values.
+        }
 
-
-
-            // Assuming i have a file that looks like:
-        /*
-            bitNumber="0"
-            length="4"
-            name="MESSAGE TYPE INDICATOR"
-            package="org.hit.fintech2018.Yair.classSomething/"
-        */
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
         catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         catch (ClassNotFoundException e) {
@@ -94,7 +79,7 @@ public class ISO8583Serializer implements IISO8583Serializer
     }
 
     //Todo: change to private after checking.
-    private List<Integer> getElementsFromFirstDataElement(byte[] data) {
+    private List<Integer> getElementsToProcess(byte[] data) {
         //data = unpackToBytesArray(data);
         List<Integer> elementsToReturn = new ArrayList<>();
         for (int i = 0; i < data.length; i++) {
