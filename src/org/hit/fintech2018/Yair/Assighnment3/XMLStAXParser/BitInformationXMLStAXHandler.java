@@ -1,4 +1,4 @@
-package org.hit.fintech2018.Yair.HelpingMethods;
+package org.hit.fintech2018.Yair.Assighnment3.XMLStAXParser;
 
 import org.hit.fintech2018.Yair.Assighnment3.BitInformation;
 
@@ -11,10 +11,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
 
-
 public class BitInformationXMLStAXHandler
 {
-    private static final String FIELDS_FILE_NAME = "fields.txt";
+    private static final String FIELDS_FILE_NAME = "org/hit/fintech2018/Yair/Assighnment3/XMLStAXParser/ISO8583_BitFieldsInfo.xml";
 
     public static BitInformation getInformationBasedOnBitNumber(Integer bitNumber) {
 
@@ -34,7 +33,7 @@ public class BitInformationXMLStAXHandler
                       id="0"
                       length="4"
                       name="MESSAGE TYPE INDICATOR"
-                      class="org.jpos.iso.IFA_NUMERIC"/>
+                      class="org.hit.fintech2018.Yair.Encoders.*Encoder"/>
                 ----------------------------------------
             */
 
