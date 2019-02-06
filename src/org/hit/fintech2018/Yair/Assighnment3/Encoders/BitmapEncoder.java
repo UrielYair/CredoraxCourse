@@ -1,4 +1,4 @@
-package org.hit.fintech2018.Yair.Encoders;
+package org.hit.fintech2018.Yair.Assighnment3.Encoders;
 
 public class BitmapEncoder extends AbstractISO8583Encoder
 {
