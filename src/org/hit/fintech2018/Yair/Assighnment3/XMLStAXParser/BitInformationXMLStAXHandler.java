@@ -27,13 +27,14 @@ public class BitInformationXMLStAXHandler
             String classPath = null;
 
             /*
+                Example of an entry in the xml file:
                 XML Structure:
                 ----------------------------------------
                     <bitfield
                       id="0"
                       length="4"
                       name="MESSAGE TYPE INDICATOR"
-                      class="org.hit.fintech2018.Yair.Encoders.*Encoder"/>
+                      class="org.hit.fintech2018.Yair.Assighnment3.Encoders.**Encoder"/>
                 ----------------------------------------
             */
 
