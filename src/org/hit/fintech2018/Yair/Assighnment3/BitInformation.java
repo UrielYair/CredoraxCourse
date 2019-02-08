@@ -6,12 +6,14 @@ public class BitInformation
     private int length;
     private String classPath;
     private String bitDescription;
+    private boolean fixed;
 
-    public BitInformation(Integer bitNumber, int length, String classPath, String bitDescription) {
+    public BitInformation(Integer bitNumber, int length, String classPath, String bitDescription, boolean fixed) {
         this.bitNumber = bitNumber;
         this.length = length;
         this.classPath = classPath;
         this.bitDescription = bitDescription;
+        this.fixed = fixed;
     }
 
     public Integer getBitNumber() {
@@ -26,7 +28,7 @@ public class BitInformation
         return classPath;
     }
 
-    public String getBitDescription() {
-        return bitDescription;
-    }
+    public String getBitDescription() { return bitDescription;  }
+
+    public boolean getFixed()   {return fixed;}
 }

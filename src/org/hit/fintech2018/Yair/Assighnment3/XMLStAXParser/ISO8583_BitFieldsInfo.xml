@@ -4,648 +4,776 @@
   <bitfield 
       id="0"
       length="4"
+      fixed="true"
       name="MESSAGE TYPE INDICATOR"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="1"
       length="16"
+      fixed="true"
       name="BIT MAP"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.BitmapEncoder"/>
   <bitfield
       id="2"
       length="19"
-      name="SECRET ID"
+      fixed="false"
+      name="SECRET ID / PRIMARY ACCOUNT NUMBER (PAN)"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLNumericEncoder"/>
   <bitfield
       id="3"
       length="6"
+      fixed="true"
       name="PROCESSING CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="4"
       length="12"
+      fixed="true"
       name="AMOUNT, TRANSACTION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="5"
       length="12"
+      fixed="true"
       name="AMOUNT, SETTLEMENT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="6"
       length="12"
+      fixed="true"
       name="AMOUNT, CARDHOLDER BILLING"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="7"
       length="10"
+      fixed="true"
       name="TRANSMISSION DATE AND TIME"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="8"
       length="8"
+      fixed="true"
       name="AMOUNT, CARDHOLDER BILLING FEE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="9"
       length="8"
+      fixed="true"
       name="CONVERSION RATE, SETTLEMENT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="10"
       length="8"
+      fixed="true"
       name="CONVERSION RATE, CARDHOLDER BILLING"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="11"
       length="6"
+      fixed="true"
       name="SYSTEM TRACE AUDIT NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="12"
       length="6"
+      fixed="true"
       name="TIME, LOCAL TRANSACTION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="13"
       length="4"
+      fixed="true"
       name="DATE, LOCAL TRANSACTION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="14"
       length="4"
+      fixed="true"
       name="DATE, EXPIRATION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="15"
       length="4"
+      fixed="true"
       name="DATE, SETTLEMENT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="16"
       length="4"
+      fixed="true"
       name="DATE, CONVERSION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="17"
       length="4"
+      fixed="true"
       name="DATE, CAPTURE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="18"
       length="4"
+      fixed="true"
       name="MERCHANTS TYPE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="19"
       length="3"
+      fixed="true"
       name="ACQUIRING INSTITUTION COUNTRY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="20"
       length="3"
+      fixed="true"
       name="PAN EXTENDED COUNTRY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="21"
       length="3"
+      fixed="true"
       name="FORWARDING INSTITUTION COUNTRY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="22"
       length="3"
+      fixed="true"
       name="POINT OF SERVICE ENTRY MODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="23"
       length="3"
+      fixed="true"
       name="CARD SEQUENCE NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="24"
       length="3"
+      fixed="true"
       name="NETWORK INTERNATIONAL IDENTIFIEER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="25"
       length="2"
+      fixed="true"
       name="POINT OF SERVICE CONDITION CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="26"
       length="2"
+      fixed="true"
       name="POINT OF SERVICE PIN CAPTURE CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="27"
       length="1"
+      fixed="true"
       name="AUTHORIZATION IDENTIFICATION RESP LEN"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="28"
       length="9"
+      fixed="true"
       name="AMOUNT, TRANSACTION FEE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.AmountEncoder"/>
   <bitfield
       id="29"
       length="9"
+      fixed="true"
       name="AMOUNT, SETTLEMENT FEE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.AmountEncoder"/>
   <bitfield
       id="30"
       length="9"
+      fixed="true"
       name="AMOUNT, TRANSACTION PROCESSING FEE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.AmountEncoder"/>
   <bitfield
       id="31"
       length="9"
+      fixed="true"
       name="AMOUNT, SETTLEMENT PROCESSING FEE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.AmountEncoder"/>
   <bitfield
       id="32"
       length="11"
+      fixed="false"
       name="ACQUIRING INSTITUTION IDENT CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLNumericEncoder"/>
   <bitfield
       id="33"
       length="11"
+      fixed="false"
       name="FORWARDING INSTITUTION IDENT CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLNumericEncoder"/>
   <bitfield
       id="34"
       length="28"
+      fixed="false"
       name="PAN EXTENDED"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLCharEncoder"/>
   <bitfield
       id="35"
       length="37"
+      fixed="false"
       name="TRACK 2 DATA"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLNumericEncoder"/>
   <bitfield
       id="36"
       length="104"
+      fixed="false"
       name="TRACK 3 DATA"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="37"
       length="12"
+      fixed="true"
       name="RETRIEVAL REFERENCE NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="38"
       length="6"
+      fixed="true"
       name="AUTHORIZATION IDENTIFICATION RESPONSE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="39"
       length="2"
+      fixed="true"
       name="RESPONSE CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="40"
       length="3"
+      fixed="true"
       name="SERVICE RESTRICTION CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="41"
       length="8"
+      fixed="true"
       name="CARD ACCEPTOR TERMINAL IDENTIFICACION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="42"
       length="15"
+      fixed="true"
       name="CARD ACCEPTOR IDENTIFICATION CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="43"
       length="40"
+      fixed="true"
       name="CARD ACCEPTOR NAME/LOCATION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="44"
       length="25"
+      fixed="false"
       name="ADITIONAL RESPONSE DATA"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLCharEncoder"/>
   <bitfield
       id="45"
       length="76"
+      fixed="false"
       name="TRACK 1 DATA"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLCharEncoder"/>
   <bitfield
       id="46"
       length="999"
+      fixed="false"
       name="ADITIONAL DATA - ISO"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="47"
       length="999"
+      fixed="false"
       name="ADITIONAL DATA - NATIONAL"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
 
   <bitfield
       id="48"
       length="999"
+      fixed="false"
       name="ADITIONAL DATA - PRIVATE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="49"
       length="3"
+      fixed="true"
       name="CURRENCY CODE, TRANSACTION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="50"
       length="3"
+      fixed="true"
       name="CURRENCY CODE, SETTLEMENT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="51"
       length="3"
+      fixed="true"
       name="CURRENCY CODE, CARDHOLDER BILLING"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="52"
       length="16"
+      fixed="true"
       name="PIN DATA"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
-
   <bitfield
       id="53"
       length="16"
+      fixed="true"
       name="SECURITY RELATED CONTROL INFORMATION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="54"
       length="120"
+      fixed="false"
       name="ADDITIONAL AMOUNTS"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="55"
       length="999"
+      fixed="false"
       name="RESERVED ISO"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="56"
       length="999"
+      fixed="false"
       name="RESERVED ISO"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="57"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="58"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="59"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="60"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="61"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="62"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="63"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="64"
       length="8"
+      fixed="true"
       name="MESSAGE AUTHENTICATION CODE FIELD"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.BinaryEncoder"/>
   <bitfield
       id="65"
       length="1"
+      fixed="true"
       name="BITMAP, EXTENDED"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.BinaryEncoder"/>
   <bitfield
       id="66"
       length="1"
+      fixed="true"
       name="SETTLEMENT CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="67"
       length="2"
+      fixed="true"
       name="EXTENDED PAYMENT CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="68"
       length="3"
+      fixed="true"
       name="RECEIVING INSTITUTION COUNTRY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="69"
       length="3"
+      fixed="true"
       name="SETTLEMENT INSTITUTION COUNTRY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="70"
       length="3"
+      fixed="true"
       name="NETWORK MANAGEMENT INFORMATION CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="71"
       length="4"
+      fixed="true"
       name="MESSAGE NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="72"
       length="4"
+      fixed="true"
       name="MESSAGE NUMBER LAST"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="73"
       length="6"
+      fixed="true"
       name="DATE ACTION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="74"
       length="10"
+      fixed="true"
       name="CREDITS NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="75"
       length="10"
+      fixed="true"
       name="CREDITS REVERSAL NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="76"
       length="10"
+      fixed="true"
       name="DEBITS NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="77"
       length="10"
+      fixed="true"
       name="DEBITS REVERSAL NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="78"
       length="10"
+      fixed="true"
       name="TRANSFER NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="79"
       length="10"
+      fixed="true"
       name="TRANSFER REVERSAL NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="80"
       length="10"
+      fixed="true"
       name="INQUIRIES NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="81"
       length="10"
+      fixed="true"
       name="AUTHORIZATION NUMBER"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="82"
       length="12"
+      fixed="true"
       name="CREDITS, PROCESSING FEE AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="83"
       length="12"
+      fixed="true"
       name="CREDITS, TRANSACTION FEE AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="84"
       length="12"
+      fixed="true"
       name="DEBITS, PROCESSING FEE AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="85"
       length="12"
+      fixed="true"
       name="DEBITS, TRANSACTION FEE AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="86"
       length="16"
+      fixed="true"
       name="CREDITS, AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="87"
       length="16"
+      fixed="true"
       name="CREDITS, REVERSAL AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="88"
       length="16"
+      fixed="true"
       name="DEBITS, AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="89"
       length="16"
+      fixed="true"
       name="DEBITS, REVERSAL AMOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="90"
       length="42"
+      fixed="true"
       name="ORIGINAL DATA ELEMENTS"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LNumericEncoder"/>
   <bitfield
       id="91"
       length="1"
+      fixed="true"
       name="FILE UPDATE CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="92"
       length="2"
+      fixed="true"
       name="FILE SECURITY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="93"
       length="6"
+      fixed="true"
       name="RESPONSE INDICATOR"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="94"
       length="7"
+      fixed="true"
       name="SERVICE INDICATOR"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="95"
       length="42"
+      fixed="true"
       name="REPLACEMENT AMOUNTS"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="96"
       length="16"
+      fixed="true"
       name="MESSAGE SECURITY CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.BinaryEncoder"/>
   <bitfield
       id="97"
       length="17"
+      fixed="true"
       name="AMOUNT, NET SETTLEMENT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.AmountEncoder"/>
   <bitfield
       id="98"
       length="25"
+      fixed="true"
       name="PAYEE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LCharEncoder"/>
   <bitfield
       id="99"
       length="11"
+      fixed="false"
       name="SETTLEMENT INSTITUTION IDENT CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLNumericEncoder"/>
   <bitfield
       id="100"
       length="11"
+      fixed="false"
       name="RECEIVING INSTITUTION IDENT CODE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLNumericEncoder"/>
   <bitfield
       id="101"
       length="17"
+      fixed="false"
       name="FILE NAME"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLCharEncoder"/>
   <bitfield
       id="102"
       length="28"
+      fixed="false"
       name="FROM ACCOUNT"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLCharEncoder"/>
   <bitfield
       id="103"
       length="10"
+      fixed="false"
       name="ACCOUNT IDENTIFICATION 2"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLCharEncoder"/>
   <bitfield
       id="104"
       length="100"
+      fixed="false"
       name="TRANSACTION DESCRIPTION"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="105"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="106"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="107"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="108"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="109"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="110"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="111"
       length="999"
+      fixed="false"
       name="RESERVED ISO USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="112"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="113"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="114"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="115"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="116"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="117"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="118"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="119"
       length="999"
+      fixed="false"
       name="RESERVED NATIONAL USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="120"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="121"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="122"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="123"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="124"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="125"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="126"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="127"
       length="999"
+      fixed="false"
       name="RESERVED PRIVATE USE"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.LLLCharEncoder"/>
   <bitfield
       id="128"
       length="8"
+      fixed="true"
       name="MAC 2"
       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.BinaryEncoder"/>
 </ISO8583Field>

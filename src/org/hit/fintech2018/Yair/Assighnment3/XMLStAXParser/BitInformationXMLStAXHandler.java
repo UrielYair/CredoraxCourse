@@ -17,14 +17,15 @@ public class BitInformationXMLStAXHandler
 
     public static BitInformation getInformationBasedOnBitNumber(Integer bitNumber) {
 
-        boolean bRequestedField, bId, bLength, bName, bClass;
-        bRequestedField = bId = bLength = bName = bClass = false;
+        boolean bRequestedField, bId, bLength, bFixed, bName, bClass;
+        bRequestedField = bId = bLength = bFixed = bName = bClass = false;
 
         try {
             String currentId = null;
             int length = 0;
             String bitDescription = null;
             String classPath = null;
+            boolean fixed = false;
 
             /*
                 Example of an entry in the xml file:
@@ -33,6 +34,7 @@ public class BitInformationXMLStAXHandler
                     <bitfield
                       id="0"
                       length="4"
+                      fixed="true"
                       name="MESSAGE TYPE INDICATOR"
                       class="org.hit.fintech2018.Yair.Assighnment3.Encoders.**Encoder"/>
                 ----------------------------------------
@@ -62,6 +64,8 @@ public class BitInformationXMLStAXHandler
                             bId = true;
                         if (qName.equalsIgnoreCase("length"))
                             bLength = true;
+                        if (qName.equalsIgnoreCase("fixed"))
+                            bFixed = true;
                         if (qName.equalsIgnoreCase("name"))
                             bName = true;
                         if (qName.equalsIgnoreCase("class"))
@@ -79,6 +83,10 @@ public class BitInformationXMLStAXHandler
                             length = Integer.parseInt(characters.getData());
                             bLength = false;
                         }
+                        if (bFixed) {
+                            fixed = characters.getData().equalsIgnoreCase("true");
+                            bFixed = false;
+                        }
                         if (bName) {
                             bitDescription = characters.getData();
                             bName = false;
@@ -88,8 +96,8 @@ public class BitInformationXMLStAXHandler
                             bClass = false;
                         }
 
-                        return new BitInformation(bitNumber, length, classPath, bitDescription);
-                        //break;
+                        return new BitInformation(bitNumber, length, classPath, bitDescription, fixed);
+                    //break;
 
                     case XMLStreamConstants.END_ELEMENT:
                         EndElement endElement = event.asEndElement();
