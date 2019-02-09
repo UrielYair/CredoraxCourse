@@ -5,6 +5,6 @@ public abstract class AbstractISO8583Encoder
 
     public AbstractISO8583Encoder() {}
 
-    public abstract byte[] encode(byte[] src, int maxLength);
+    public abstract byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception;
 
 }

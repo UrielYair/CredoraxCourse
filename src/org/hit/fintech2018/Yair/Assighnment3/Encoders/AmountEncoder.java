@@ -5,7 +5,7 @@ public class AmountEncoder extends AbstractISO8583Encoder
     //ASCII AMOUNT
     //TODO:
     @Override
-    public byte[] encode(byte[] src, int maxLength) {
+    public byte[] encode(byte[] src, int maxLength, boolean isFixed) {
         return null;
     }
 }
