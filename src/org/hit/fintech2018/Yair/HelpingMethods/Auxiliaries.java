@@ -10,6 +10,10 @@ import java.util.Arrays;
 
 public class Auxiliaries
 {
+    // TODO: make input validation about the length of the input array.
+    // TODO: check if there are some method which deny bytes which are not digits.
+    // TODO: add examples to each of the methods !!!!!
+
     public static   byte[]  byteArraysConcat(byte[]...arrays)   throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         for (byte[] arr : arrays)
@@ -53,10 +57,91 @@ public class Auxiliaries
             throw new Exception("The value of the digits to return is too high!.");
         return Arrays.copyOf(source, amountOfDigits);
     }
-    public static   byte[]  leftPadding(byte[] original, int newSize){
-        byte[] arrayToReturn = null;
-        System.arraycopy(original,0,arrayToReturn,newSize-original.length,original.length);
+    public static   byte[]  leftPadding(byte[] src, int newSize, char characterToPadWith) throws Exception{
+        if (newSize==src.length)    return src;
+        if (newSize<src.length)
+            throw new Exception("New size for padding method is smaller than the length of the original array.");
+
+        byte[] arrayToReturn = new byte[newSize];
+
+        int paddingValueAsInteger = characterToPadWith-'0';
+        // The left side - padded area.
+        for (int i = 0; i < newSize-src.length; i++)
+            arrayToReturn[i] = (byte) paddingValueAsInteger;
+
+        // The right side - original values.
+        System.arraycopy(src,0,arrayToReturn,newSize-src.length,src.length);
+
         return arrayToReturn;
+    }
+    public static   byte[]  rightPadding(byte[] src, int newSize, char characterToPadWith) throws Exception{
+        /*
+        * The method will pad on the right side with givven character.
+        * Input:    {H,i, ,3,4,5}, 9, 'B'
+        * Output:   {H,i, ,3,4,5,B,B,B}
+        * */
+
+        if (newSize==src.length)    return src;
+        if (newSize<src.length)
+            throw new Exception("New size for padding method is smaller than the length of the original array.");
+
+        byte[] arrayToReturn = new byte[newSize];
+
+        // The left side - original values.
+        System.arraycopy(src,0,arrayToReturn,0 ,src.length);
+
+        // The right side - padded area.
+        for (int i = src.length; i < newSize; i++)
+            arrayToReturn[i] = (byte) characterToPadWith;
+
+        return arrayToReturn;
+    }
+    public static   void    binaryValidation(byte[] src) throws Exception{
+        for (int i = 0; i < src.length; i++) {
+            if (src[i] < 0 || src[i] > 1) throw new Exception("Not in a valid binary format.");
+        }
+}
+    public static   byte[] getDigitsInBitesArrayForm(int length) throws Exception{
+        /*
+        * Input: int number represent length of value.
+        * Output: byte array which represent the length.
+        *
+        * Examples:
+        *
+        * input- 10
+        * Output- {1,0}
+        *
+        * input- 152
+        * output-  {0,1,5,2}
+        * */
+        if (length<0)   throw new Exception("value of length can not be negative.");
+
+        String lengthString = String.valueOf(length);
+        byte[] prefixToReturn;
+
+        int amountOfDigitsInLengthVariable =lengthString.length();
+        if (amountOfDigitsInLengthVariable>4)
+            throw new Exception("Length value is not valid for ISO8583 data element");
+
+        switch (amountOfDigitsInLengthVariable)
+        {
+            case 1: {
+                return leftPadding((new byte[]{(byte)length}),2,'0');
+                // break;
+            }
+            case 2: {
+                return (new byte[]{ (byte) lengthString.charAt(0),
+                                    (byte) lengthString.charAt(1)});
+                //break;
+            }
+            case 3:{
+                return leftPadding((new byte[]{ (byte) lengthString.charAt(0),
+                                    (byte) lengthString.charAt(1),
+                                    (byte) lengthString.charAt(2)}),4,'0');
+                //break;
+            }
+        }
+        return null;
     }
 
     // Encryption methods:
@@ -106,7 +191,7 @@ public class Auxiliaries
     }
 
     // Printing methods:
-    public static   void    printByteArray(byte[] array){
+    public static  void     printByteArray(byte[] array){
         System.out.println(byteArrayToHexString(array));
     }
 
@@ -141,17 +226,56 @@ public class Auxiliaries
         return packIntoPairsArray(stringAsByteArr);
     }
     public static   byte[]  packIntoPairsArray(byte[] data) {
+        // TODO: check what to do if data.length is odd.
+        // Assuming 'data' comes as singles bytes and will be returned as nibbles.
+        /*
+         * Input:           {A,5,B,F,3,0}
+         * Output:          {A5,BF,30}
+         */
+
         byte[] arrayOfPairs = new byte[data.length / 2];
         for (int i = 0; i < data.length; i+=2)
             arrayOfPairs[i/2] = (byte) ((data[i] << 4) | (data[i+1] & 0x0F));
         return arrayOfPairs;
     }
     public static   byte[]  unpackToBytesArray(byte[] data) {
+        // TODO: check what to do if data.length is odd.
+        // Assuming 'data' comes as nibbles and will return as character of byte.
+        /*
+        * Input:            {A5,BF,30}
+        * Output:           {A,5,B,F,3,0}
+        */
+
         byte[] arrayToReturns = new byte[data.length * 2];
         for (int i = 0; i < data.length; i++) {
             arrayToReturns[ i * 2 ] = (byte) ((data[i] & 0xF0) >> 4);
             arrayToReturns[ i * 2 + 1 ] = (byte) (data[i] & 0x0F);
         }
         return arrayToReturns;
+    }
+    public static   byte[]  binaryToHex(byte[] data) throws Exception{
+
+        if (data.length%4!=0) throw new Exception("length of binary data must be able to divide by 4 in order to be converted to HexDecimal value.");
+        byte[] arrayToReturn = new byte[data.length/4];
+
+        for (int i = 0; i < data.length / 4; i++) {
+            String current4bitToConvert = Arrays.copyOfRange(data,i*4,i*4+3).toString();
+            int valueOfCurrentChunk = Integer.parseInt(current4bitToConvert,2);
+            String hexString = Integer.toString(valueOfCurrentChunk,16).toUpperCase();
+            arrayToReturn[i] = (byte) hexString.charAt(0);
+        }
+        return arrayToReturn;
+
+    }
+    public static   String  convertByteArrayToASCIIString(byte[] src){
+        /*
+        * Convert byte array values to ASCII characters.
+        * Input:    61 61 61 42 42 42 42
+        * Output:   aaaBBBB
+        * */
+        char[] asciiCharactersOfBytesValue = new char[src.length];
+        for (int i=0; i<src.length;i++)
+            asciiCharactersOfBytesValue[i] = (char) src[i];
+        return String.valueOf(asciiCharactersOfBytesValue);
     }
 }
