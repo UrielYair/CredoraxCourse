@@ -82,9 +82,11 @@ public class CVCGenerator implements ICVCGenerator
             //Step 7: Split each pair to two values: 4 higher bits and 4 lower bits.
 
             // Example:
-            //        00010100
-            //        /     \
-            // =>  0001  &  0100
+            //                 00010100
+            //                 /     \
+            //          =>  0001  &  0100
+            //               ||       ||
+            //          =>   1        4     ===>  as pair(nible): 14
 
             byte[] resultAfter3DESUnpacked = unpackToBytesArray(resultAfter3DES);
 
