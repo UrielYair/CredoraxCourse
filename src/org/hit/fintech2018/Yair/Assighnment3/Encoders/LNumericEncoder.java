@@ -1,5 +1,4 @@
 package org.hit.fintech2018.Yair.Assighnment3.Encoders;
-
 import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.*;
 
 public class LNumericEncoder extends AbstractISO8583Encoder
@@ -7,19 +6,17 @@ public class LNumericEncoder extends AbstractISO8583Encoder
     @Override
     public byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception{
 
-
         /************************************************************************************************
          * The method will get the numeric values from the src                                          *
          * and return them in the right format according to the bit field as defined in the iso standard*
          *                                                                                              *
-         * The method will checks if the size fits the packing                                          *
-         * check if this bit field is fixed size or not,                                                *
-         * and also check if padding is needed.                                                         *
-         * Because this class is belong to numeric values - the padding will be zeros on the left side. *
-         *                                                                                              *
-         * at end, the method will pack the bytes and return the new array.                             *
-         *                                                                                              *
-         * The prefix will be divided by 2 because we pack the byte array.                              *
+         *
+         * Notes:
+         * 1. The returned values will be padded - if needed (left padding with zeros).
+         * 2. Can handle fixed length or not.
+         * 3. The returned bytes will be packed.
+         * 4. The prefix will be divided by 2 because of packing the byte array.                        *
+         *
          * ******************************************************************************************** *
          *                                          Examples:                                           *
          * ******************************************************************************************** *
@@ -48,7 +45,7 @@ public class LNumericEncoder extends AbstractISO8583Encoder
          ************************************************************************************************
          **/
 
-        //TODO: check prefix
+        //TODO: check prefix values
         byte[] arrayToReturn = null;
 
         if (isFixed) {

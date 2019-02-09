@@ -38,6 +38,8 @@ public class LCharEncoder extends AbstractISO8583Encoder
          *                                                                                              *
          ************************************************************************************************
          **/
+
+        //TODO: check prefix values
         byte[] arrayToReturn = null;
 
         if (isFixed) {
