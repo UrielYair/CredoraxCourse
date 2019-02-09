@@ -10,13 +10,13 @@ public class LNumericEncoder extends AbstractISO8583Encoder
          * The method will get the numeric values from the src                                          *
          * and return them in the right format according to the bit field as defined in the iso standard*
          *                                                                                              *
-         *
-         * Notes:
-         * 1. The returned values will be padded - if needed (left padding with zeros).
-         * 2. Can handle fixed length or not.
-         * 3. The returned bytes will be packed.
+         *                                                                                              *
+         * Notes:                                                                                       *
+         * 1. The returned values will be padded - if needed (left padding with zeros).                 *
+         * 2. Can handle fixed length or not.                                                           *
+         * 3. The returned bytes will be packed.                                                        *
          * 4. The prefix will be divided by 2 because of packing the byte array.                        *
-         *
+         *                                                                                              *
          * ******************************************************************************************** *
          *                                          Examples:                                           *
          * ******************************************************************************************** *
