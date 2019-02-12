@@ -1,6 +1,6 @@
 package org.hit.fintech2018.Yair.Assighnment3;
 
-import org.hit.fintech2018.Yair.Converters.AbstractConverter;
+import org.hit.fintech2018.Yair.Assighnment3.Encoders.AbstractISO8583Encoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.hit.fintech2018.Yair.HelpingMethods.BitInformationXMLStAXHandler.getInformationBasedOnBitNumber;
+import static org.hit.fintech2018.Yair.Assighnment3.XMLStAXParser.BitInformationXMLStAXHandler.getInformationBasedOnBitNumber;
+import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.getDigitsOfSpecificNumberInBytesArrayForm;
 
 public class ISO8583Serializer implements IISO8583Serializer
 {
     public ISO8583Serializer() {}
 
     @Override
-    public byte[] serializeISO8583(int version, Map<Integer, byte[]> data) {
+    public byte[]           serializeISO8583(int version, Map<Integer, byte[]> data) {
         /*
         * Version (or MTI - Message type indicator):
         * Four numeric digits that specify the version of the ISO8583 standard: 1987, 1993 or 2003
@@ -26,43 +27,45 @@ public class ISO8583Serializer implements IISO8583Serializer
         * the bitmap will indicate what other element will be presented in the map.
         */
 
-        // Assuming that each value of data in the key-value pair is valid.
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
-
+        ByteArrayOutputStream outputStream = null;
         List<Integer> dataElements = getElementsToProcess(data.get(1));
-        for (Integer i : dataElements) {
-            try {
+
+        try {
+            outputStream = new ByteArrayOutputStream( );
+            // Adding the MTID before all the data elements content of the message.
+            outputStream.write(getDigitsOfSpecificNumberInBytesArrayForm(version));
+            for (Integer i : dataElements) {
                 byte[] toAdd = getBytesFromDataElement(i, data.get(i));
                 outputStream.write(toAdd);
             }
-            catch (IOException e) {
-                //Todo: check option of changing the body of the catch block.
-                e.printStackTrace();
-            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return outputStream.toByteArray( );
+        if (outputStream ==null)    return null;
+        else
+            return outputStream.toByteArray( );
+
     }
-
-    private byte[] getBytesFromDataElement(Integer bitNumber, byte[] data) {
+    private byte[]          getBytesFromDataElement(Integer bitNumber, byte[] data) {
         try {
-
-
             BitInformation infoOfSpecificBit = getInformationBasedOnBitNumber(bitNumber);
-            //Todo: fix all class paths in field.xml file. to my classes after implementing them.
-            //reflection
-            if (infoOfSpecificBit!=null) {
-                AbstractConverter converterInstance = (AbstractConverter) Class.forName(infoOfSpecificBit.getClassPath()).newInstance();
-                converterInstance.setData(data); //Todo: maybe there is no need for convering and only return the array.
-                return converterInstance.convertToHexByte(infoOfSpecificBit.getLength());
 
-                // include data in the class converter object.
-                //Method convertingMethod = classConverter.getClass().getDeclaredMethod("convertToHexByte", null);
-                //return (byte[]) convertingMethod.invoke(classConverter);
+            if (infoOfSpecificBit!=null) {
+                AbstractISO8583Encoder converterInstance = (AbstractISO8583Encoder) Class.forName(infoOfSpecificBit.getClassPath()).newInstance();
+                return converterInstance.encode(data,infoOfSpecificBit.getLength(),infoOfSpecificBit.getFixed());
+
+                // Consider using reflection instead:
+                // Method convertingMethod = classConverter.getClass().getDeclaredMethod("encode", null);
+                // return (byte[]) convertingMethod.invoke(classConverter);
             }
             else
-                return null; //Todo: fix and manage correctly all nullable returned values.
+                System.out.println("No such data element in ISO8583.");
+                return null;
         }
 
         catch (IllegalAccessException e) {
@@ -74,13 +77,16 @@ public class ISO8583Serializer implements IISO8583Serializer
         catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        return data; //Todo: fix
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+    private List<Integer>   getElementsToProcess(byte[] data) {
+        /**
+        * Method for getting all data element which takes part in the ISO8583 message.
+        * */
 
-    //Todo: change to private after checking.
-    private List<Integer> getElementsToProcess(byte[] data) {
-        //data = unpackToBytesArray(data);
         List<Integer> elementsToReturn = new ArrayList<>();
         for (int i = 0; i < data.length; i++) {
             if (data[i]==1)
