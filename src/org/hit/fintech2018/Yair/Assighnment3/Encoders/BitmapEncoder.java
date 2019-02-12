@@ -10,7 +10,7 @@ public class BitmapEncoder extends AbstractISO8583Encoder
          * The method will get the byte array of the bitmap. (will be represented by a binary form)
          * and return it as hex bits packed (nibbles).
          * */
-        // TODO: FINISHED!
+
         binaryValidation(src);
         if (src.length!=64) throw new Exception("the bitmap must be exactly 64 bits long");
         byte[] hexArray = binaryToHex(src);

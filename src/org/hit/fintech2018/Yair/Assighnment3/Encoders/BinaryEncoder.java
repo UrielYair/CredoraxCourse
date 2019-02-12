@@ -37,16 +37,12 @@ public class BinaryEncoder extends AbstractISO8583Encoder
          ************************************************************************************************
          **/
 
-        //TODO: check prefix values
-        //TODO: fix packing method such that won't convert to hexa.
-        //TODO: NOT FINISHED!
         if (isFixed) {
             return src;
         }
 
         else {
-            byte[] prefixLength = packIntoPairsArray(getDigitsInBitesArrayForm(maxLength));
-
+            byte[] prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(maxLength));
             return byteArraysConcat(prefixLength,src);
         }
     }

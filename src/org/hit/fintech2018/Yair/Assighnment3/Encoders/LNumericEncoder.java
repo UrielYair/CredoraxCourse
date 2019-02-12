@@ -45,19 +45,17 @@ public class LNumericEncoder extends AbstractISO8583Encoder
          ************************************************************************************************
          **/
 
-        //TODO: check prefix values
         byte[] arrayToReturn = null;
 
         if (isFixed) {
             arrayToReturn = leftPadding(src, maxLength, '0');
             return packIntoPairsArray(arrayToReturn);
         }
-
         else {
             if (src.length%2!=0)    src = leftPadding(src,src.length+1,'0');
 
             src = packIntoPairsArray(src);
-            byte[] prefixLength = packIntoPairsArray(getDigitsInBitesArrayForm(maxLength/2));
+            byte[] prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(maxLength/2));
 
             return byteArraysConcat(prefixLength,src);
         }

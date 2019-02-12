@@ -5,7 +5,6 @@ public class LCharEncoder extends AbstractISO8583Encoder
 {
     @Override
     public byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception {
-
         /************************************************************************************************
          * The method will get all character bit from the src                                           *
          * and returns the ASCII value of them.                                                         *
@@ -39,7 +38,6 @@ public class LCharEncoder extends AbstractISO8583Encoder
          ************************************************************************************************
          **/
 
-        //TODO: check prefix values
         byte[] arrayToReturn = null;
 
         if (isFixed) {
@@ -53,7 +51,7 @@ public class LCharEncoder extends AbstractISO8583Encoder
             if (src.length%2!=0)    src = rightPadding(src,src.length+1,' ');
 
             src = packIntoPairsArray(src);
-            byte[] prefixLength = packIntoPairsArray(getDigitsInBitesArrayForm(maxLength/2));
+            byte[] prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(maxLength/2));
             return byteArraysConcat(prefixLength,src);
         }
     }
