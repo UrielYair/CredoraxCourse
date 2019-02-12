@@ -101,7 +101,7 @@ public class Auxiliaries
             if (src[i] < 0 || src[i] > 1) throw new Exception("Not in a valid binary format.");
         }
 }
-    public static   byte[] getDigitsInBitesArrayForm(int length) throws Exception{
+    public static   byte[] getDigitsOfSpecificNumberInBytesArrayForm(int length) throws Exception{
         /*
         * Input: int number represent length of value.
         * Output: byte array which represent the length.
@@ -117,9 +117,8 @@ public class Auxiliaries
         if (length<0)   throw new Exception("value of length can not be negative.");
 
         String lengthString = String.valueOf(length);
-        byte[] prefixToReturn;
-
         int amountOfDigitsInLengthVariable =lengthString.length();
+
         if (amountOfDigitsInLengthVariable>4)
             throw new Exception("Length value is not valid for ISO8583 data element");
 
@@ -221,18 +220,20 @@ public class Auxiliaries
         return sb.toString();
 
     }
-    public static   byte[]  stringToBytePackedArray(String byteArrayAsString){
+    public static   byte[]  stringToBytePackedArray(String byteArrayAsString) throws Exception{
         byte[] stringAsByteArr = stringToByteArray(byteArrayAsString);
         return packIntoPairsArray(stringAsByteArr);
     }
-    public static   byte[]  packIntoPairsArray(byte[] data) {
-        // TODO: check what to do if data.length is odd.
-        // Assuming 'data' comes as singles bytes and will be returned as nibbles.
-        /*
+    public static   byte[]  packIntoPairsArray(byte[] data) throws Exception{
+        /**
+         * Pack input to nibbles (packed bytes) .
+         * - Assuming 'data' comes as singles bytes.
+         *
          * Input:           {A,5,B,F,3,0}
          * Output:          {A5,BF,30}
          */
 
+        if (data.length%2!=0) data = leftPadding(data,data.length+1,'0');
         byte[] arrayOfPairs = new byte[data.length / 2];
         for (int i = 0; i < data.length; i+=2)
             arrayOfPairs[i/2] = (byte) ((data[i] << 4) | (data[i+1] & 0x0F));
