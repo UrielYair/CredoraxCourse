@@ -53,15 +53,7 @@ public class LCharEncoder extends AbstractISO8583Encoder
             // Concatenation of length as prefix
             // followed by the value of the data element.
 
-            byte[] prefixLength = null;
-
-            int srcLength = src.length;
-            if (srcLength<10)
-                prefixLength = new byte[]{(byte) srcLength};
-            else if (10<=srcLength && srcLength<100)
-                prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(src.length));
-            else
-                prefixLength = packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(src.length),4,'0'));
+            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length);
 
             if (src.length%2!=0)    src = rightPadding(src,src.length+1,' ');
             src = packIntoPairsArray(src);

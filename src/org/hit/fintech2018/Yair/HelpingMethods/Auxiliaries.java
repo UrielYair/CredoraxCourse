@@ -140,6 +140,18 @@ public class Auxiliaries
         }
         return null;
     }
+    public static   byte[]  getPrefixForInputLengthBetween_L_LL_LLL(int inputLength) throws Exception{
+
+        if (inputLength<10)
+            return new byte[]{(byte) inputLength};
+        else if (10<=inputLength && inputLength<100)
+            return packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(inputLength));
+        else if (inputLength<1000)
+            return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(inputLength),4,'0'));
+        else
+            throw new Exception("length of: " + inputLength + " can not be a prefix length in ISO8583 standard." );
+
+    }
 
     // Validation methods:
     public static   void    binaryValidation(byte[] src) throws Exception{

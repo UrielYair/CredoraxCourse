@@ -23,11 +23,11 @@ public class LNumericEncoder extends AbstractISO8583Encoder
          *       isFixed=false                                                                          *
          * ***************************                                                                  *
          * Input:    {3,7,9,0}                                                                          *
-         * Output:   {02 37 90}                                                                         *
+         * Output:   {2 37 90}                                                                         *
          *            ^Prefix length                                                                    *
          ****                                                                                           *
          * Input:    {3,7,9,0,8}                                                                        *
-         * Output:   {03 03 79 08}                                                                      *
+         * Output:   {3 03 79 08}                                                                      *
          *            ^  ^padding                                                                       *
          *            ^                                                                                 *
          *      Prefix length                                                                           *
@@ -45,6 +45,8 @@ public class LNumericEncoder extends AbstractISO8583Encoder
          ************************************************************************************************
          **/
 
+        numericValidation(src);
+
         byte[] arrayToReturn = null;
 
         if (isFixed) {
@@ -52,10 +54,13 @@ public class LNumericEncoder extends AbstractISO8583Encoder
             return packIntoPairsArray(arrayToReturn);
         }
         else {
-            if (src.length%2!=0)    src = leftPadding(src,src.length+1,'0');
+            // Concatenation of length as prefix
+            // followed by the value of the data element.
 
+            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length);
+
+            if (src.length%2!=0)    src = leftPadding(src,src.length+1,'0');
             src = packIntoPairsArray(src);
-            byte[] prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(maxLength/2));
 
             return byteArraysConcat(prefixLength,src);
         }
