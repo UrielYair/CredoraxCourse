@@ -12,13 +12,15 @@ public class AmountEncoder extends AbstractISO8583Encoder
     * - First 3 bits are for a currency code - The currency code is based on ISO4217 standard.
     * - The other bits represent the amount of money of the specific currency.
     *
-    * note: The standard defines the exponent of specif currency.
+    * note: The standard defines the exponent of specific currency.
     * */
 
     @Override
     public byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception{
+        numericValidation(src);
+
         if (src.length<3)
-            throw new Exception("src array of amount is too short, maybe currency code is missing.");
+            throw new Exception("The input source for the amount of certain currency is not valid.");
 
         // Extract values from input:
         byte[] currencyCode = Arrays.copyOfRange(src,0,2);
@@ -33,7 +35,7 @@ public class AmountEncoder extends AbstractISO8583Encoder
         byte[] arrayToReturn = byteArraysConcat(currencyCode,amountOfMoneyRepresentedInBits);
 
         if (arrayToReturn.length>maxLength)
-            throw new Exception("Value of amount of money have to many bits.");
+            throw new Exception("Value of amount of money have too many bits.");
 
         // Bits packing and return.
         return packIntoPairsArray(arrayToReturn);

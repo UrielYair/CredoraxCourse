@@ -96,12 +96,7 @@ public class Auxiliaries
 
         return arrayToReturn;
     }
-    public static   void    binaryValidation(byte[] src) throws Exception{
-        for (int i = 0; i < src.length; i++) {
-            if (src[i] < 0 || src[i] > 1) throw new Exception("Not in a valid binary format.");
-        }
-}
-    public static   byte[] getDigitsOfSpecificNumberInBytesArrayForm(int length) throws Exception{
+    public static   byte[]  getDigitsOfSpecificNumberInBytesArrayForm(int length) throws Exception{
         /*
         * Input: int number represent length of value.
         * Output: byte array which represent the length.
@@ -141,6 +136,18 @@ public class Auxiliaries
             }
         }
         return null;
+    }
+
+    // Validation methods:
+    public static   void    binaryValidation(byte[] src) throws Exception{
+        for (int i = 0; i < src.length; i++) {
+            if (src[i] < 0 || src[i] > 1) throw new Exception("Not in a valid binary format.");
+        }
+    }
+    public static   void    numericValidation(byte[] src) throws Exception{
+        for (int i = 0; i < src.length; i++) {
+            if (src[i] < 0 || src[i] > 9) throw new Exception("Not in a valid numeric format.");
+        }
     }
 
     // Encryption methods:
