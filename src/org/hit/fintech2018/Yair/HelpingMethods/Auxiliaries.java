@@ -103,6 +103,9 @@ public class Auxiliaries
         *
         * Examples:
         *
+        * input- 7
+        * Output- {7}
+        *
         * input- 10
         * Output- {1,0}
         *
@@ -120,7 +123,7 @@ public class Auxiliaries
         switch (amountOfDigitsInLengthVariable)
         {
             case 1: {
-                return leftPadding((new byte[]{(byte)length}),2,'0');
+                return new byte[]{(byte)length};
                 // break;
             }
             case 2: {

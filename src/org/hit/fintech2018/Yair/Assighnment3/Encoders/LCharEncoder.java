@@ -22,7 +22,11 @@ public class LCharEncoder extends AbstractISO8583Encoder
          *                                                                                              *
          * isFixed=false                                                                                *
          * Input:    {h,i, ,3,7,9,0}                                                                    *
-         * Output:   {07 68 69 20 33 37 39 30}                                                          *
+         * Output:   {7 68 69 20 33 37 39 30}                                                           *
+         *            ^Prefix length                                                                    *
+         *                                                                                              *
+         * Input:    {H,E,L,L, ,Y,E,S,!,!}                                                              *
+         * Output:   {10 48 45 4c 4c 20 59 45 53 21 21}                                                 *
          *            ^Prefix length                                                                    *
          *                                                                                              *
          * ******************************************************************************************** *
@@ -48,10 +52,20 @@ public class LCharEncoder extends AbstractISO8583Encoder
         else {
             // Concatenation of length as prefix
             // followed by the value of the data element.
-            if (src.length%2!=0)    src = rightPadding(src,src.length+1,' ');
 
+            byte[] prefixLength = null;
+
+            int srcLength = src.length;
+            if (srcLength<10)
+                prefixLength = new byte[]{(byte) srcLength};
+            else if (10<=srcLength && srcLength<100)
+                prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(src.length));
+            else
+                prefixLength = packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(src.length),4,'0'));
+
+            if (src.length%2!=0)    src = rightPadding(src,src.length+1,' ');
             src = packIntoPairsArray(src);
-            byte[] prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(maxLength/2));
+
             return byteArraysConcat(prefixLength,src);
         }
     }
