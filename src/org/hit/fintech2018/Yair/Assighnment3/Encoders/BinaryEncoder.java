@@ -13,7 +13,8 @@ public class BinaryEncoder extends AbstractISO8583Encoder
          *                                                                                              *
          *                                                                                              *
          * Note:                                                                                        *
-         * Only the prefix will packed.                                                                 *
+         * If fixed size field - value will be right padded with zeros.                                 *
+         * else- will calculate the length of the input and will add it as a prefix.                    *
          *                                                                                              *
          * ******************************************************************************************** *
          *                                          Examples:                                           *
@@ -21,11 +22,11 @@ public class BinaryEncoder extends AbstractISO8583Encoder
          *       isFixed=false                                                                          *
          * ***************************                                                                  *
          * Input:    {0,0,1,0}                                                                          *
-         * Output:   {04,0,0,1,0}                                                                       *
+         * Output:   {4,0,0,1,0}                                                                        *
          *                                                                                              *
-         * ***                                                                                           *
+         * ***                                                                                          *
          * Input:    {1,1,1,0,1,1}                                                                      *
-         * Output:   {03,1,1,1,0,1,1}                                                                   *
+         * Output:   {6,1,1,1,0,1,1}                                                                    *
          *            ^                                                                                 *
          *      Prefix length                                                                           *
          *                                                                                              *
@@ -33,17 +34,22 @@ public class BinaryEncoder extends AbstractISO8583Encoder
          *       isFixed=true                                                                           *
          * ***************************                                                                  *
          * Input:    {1,1,1,0,0,0,0,1,1,1}                                                              *
-         * Output:   {1,1,1,0,0,0,0,1,1,1} -no prefix                                                   *
+         * Output:   {1,1,1,0,0,0,0,1,1,1}      - no prefix and length is as maxLength for this field.  *
+         * Output:   {1,1,1,0,0,0,0,1,1,1,0,0}  - no prefix and length is smaller by 2 from maxLength   *
+         *                                                                                              *
          ************************************************************************************************
          **/
 
+        binaryValidation(src);
+
         if (isFixed) {
-            return src;
+            if (src.length > maxLength)
+                throw new Exception("Binary input array length is too long.");
+            return rightPadding(src,maxLength,'0');
         }
 
         else {
-            byte[] prefixLength = packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(maxLength));
-            return byteArraysConcat(prefixLength,src);
+            return byteArraysConcat( new byte[] {(byte)src.length} , src);
         }
     }
 }
