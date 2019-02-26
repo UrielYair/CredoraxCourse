@@ -31,13 +31,24 @@ public class AmountEncoder extends AbstractISO8583Encoder
         if (amountOfMoneyRepresentedInBits.length %2 != 0)
             amountOfMoneyRepresentedInBits = leftPadding(amountOfMoneyRepresentedInBits,amountOfMoneyRepresentedInBits.length+1,'0');
 
+        // Checking if output should be adjusted because the field if fixed size:
+        if (isFixed){
+            int lengthOfAmountValue = maxLength - 4; // subtracting the first 4 bits which represents the currency.
+            if (amountOfMoneyRepresentedInBits.length>lengthOfAmountValue)
+                throw new Exception("The input have too many digits that represent the amount of money, " +
+                        "than the defined length in the ISO8583 standard.");
+            else
+                amountOfMoneyRepresentedInBits = leftPadding(amountOfMoneyRepresentedInBits,lengthOfAmountValue,'0');
+        }
         // Data concatenation:
         byte[] arrayToReturn = byteArraysConcat(currencyCode,amountOfMoneyRepresentedInBits);
 
-        if (arrayToReturn.length>maxLength)
+        // Bits packing:
+        arrayToReturn = packIntoPairsArray(arrayToReturn);
+
+        if (arrayToReturn.length > maxLength/2) // The reason for dividing by 2 is because the program pack the bits.
             throw new Exception("Value of amount of money have too many bits.");
 
-        // Bits packing and return.
-        return packIntoPairsArray(arrayToReturn);
+        return arrayToReturn;
     }
 }
