@@ -10,8 +10,6 @@ import java.util.Arrays;
 
 public class Auxiliaries
 {
-    // TODO: make input validation about the length of the input array.
-    // TODO: check if there are some method which deny bytes which are not digits.
     // TODO: add examples to each of the methods !!!!!
 
     public static   byte[]  byteArraysConcat(byte[]...arrays)   throws IOException {
@@ -140,17 +138,49 @@ public class Auxiliaries
         }
         return null;
     }
-    public static   byte[]  getPrefixForInputLengthBetween_L_LL_LLL(int inputLength) throws Exception{
+    public static   byte[]  getPrefixForInputLengthBetween_L_LL_LLL(int srcArrayLength, int numOfLs) throws Exception{
+        /*
+        * The method will calculate the length prefix based on the class structure (amount of L's in the name of the class).
+        *
+        * for Example:
+        * Calling class is LLLCharEncoder (3 L's) and srcArrayLength is 56.
+        * Output: {0,0,5,6} - ( four bits that eventually will be packed )
+        * - the leading 0 is left padding, and the reason for 4 bits long is to support length of 3 digits like 997.
+        *   the padding is because of the later packing on the prefix.
+        *
+        * Input: Calling class: LLNumericEncoder (2 L's) and srcArrayLength of 6.
+        * Output: {06}
+        * Output: If the calling class was LCharEncoder {06} - padding because of the later packing.
+        * */
 
-        if (inputLength<10)
-            return new byte[]{(byte) inputLength};
-        else if (10<=inputLength && inputLength<100)
-            return packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(inputLength));
-        else if (inputLength<1000)
-            return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(inputLength),4,'0'));
+        if (numOfLs == 1){
+            if (srcArrayLength<10)
+                return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),2,'0'));
+            else
+                throw new Exception("The array length of the input doesn't fit the bit field.");
+        }
+        else if (numOfLs == 2){
+            if (srcArrayLength<100)
+                return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),2,'0'));
+            else
+                throw new Exception("The array length of the input doesn't fit the bit field.");
+        }
+        else{
+            if (srcArrayLength<1000)
+                return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),4,'0'));
+            else
+                throw new Exception("The array length of the input doesn't fit the bit field.");
+        }
+        /*
+        if (srcArrayLength<10)
+            return new byte[]{(byte) srcArrayLength};
+        else if (10<=srcArrayLength && srcArrayLength<100)
+            return packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength));
+        else if (srcArrayLength<1000)
+            return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),4,'0'));
         else
-            throw new Exception("length of: " + inputLength + " can not be a prefix length in ISO8583 standard." );
-
+            throw new Exception("length of: " + srcArrayLength + " can not be a prefix length in ISO8583 standard." );
+        */
     }
 
     // Validation methods:

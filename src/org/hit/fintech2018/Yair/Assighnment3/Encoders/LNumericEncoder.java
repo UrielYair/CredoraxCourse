@@ -1,8 +1,10 @@
 package org.hit.fintech2018.Yair.Assighnment3.Encoders;
-import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.*;
+import static org.hit.fintech2018.Yair.Assighnment3.Encoders.HelpingMethods.*;
 
 public class LNumericEncoder extends AbstractISO8583Encoder
 {
+    private final int numOfLs = 1;
+
     @Override
     public byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception{
 
@@ -45,24 +47,7 @@ public class LNumericEncoder extends AbstractISO8583Encoder
          ************************************************************************************************
          **/
 
-        numericValidation(src);
+        return numericEncoding(src,maxLength,isFixed,numOfLs);
 
-        byte[] arrayToReturn = null;
-
-        if (isFixed) {
-            arrayToReturn = leftPadding(src, maxLength, '0');
-            return packIntoPairsArray(arrayToReturn);
-        }
-        else {
-            // Concatenation of length as prefix
-            // followed by the value of the data element.
-
-            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length);
-
-            if (src.length%2!=0)    src = leftPadding(src,src.length+1,'0');
-            src = packIntoPairsArray(src);
-
-            return byteArraysConcat(prefixLength,src);
-        }
     }
 }
