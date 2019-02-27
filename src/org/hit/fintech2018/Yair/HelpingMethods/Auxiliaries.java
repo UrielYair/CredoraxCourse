@@ -165,12 +165,14 @@ public class Auxiliaries
             else
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
-        else{
+        else if (numOfLs == 3){
             if (srcArrayLength<1000)
                 return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),4,'0'));
             else
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
+        else
+            throw new Exception("Number of L's: " + numOfLs + " is not defined in ISO8583 standard.");
         /*
         if (srcArrayLength<10)
             return new byte[]{(byte) srcArrayLength};
