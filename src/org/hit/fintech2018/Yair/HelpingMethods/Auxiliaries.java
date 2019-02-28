@@ -284,16 +284,22 @@ public class Auxiliaries
         if (data.length%4!=0) throw new Exception("length of binary data must be able to divide by 4 in order to be converted to HexDecimal value.");
         byte[] arrayToReturn = new byte[data.length/4];
 
-        for (int i = 0; i < data.length / 4; i++) {
-            String current4bitToConvert = Arrays.copyOfRange(data,i*4,i*4+3).toString();
-            int valueOfCurrentChunk = Integer.parseInt(current4bitToConvert,2);
-            String hexString = Integer.toString(valueOfCurrentChunk,16).toUpperCase();
-            arrayToReturn[i] = (byte) hexString.charAt(0);
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<data.length;i++){
+            sb.append(data[i]);
         }
+        String binaryStr = sb.toString();
+
+        for (int i = 0; i < data.length / 4; i++) {
+            String current4bit = binaryStr.substring(i*4,i*4+4);
+            int decimal = Integer.parseInt(current4bit, 2);
+            String hexStr = Integer.toString(decimal, 16).toUpperCase();
+            arrayToReturn[i] = (byte) hexStr.charAt(0);
+        }
+
         return arrayToReturn;
 
     }
-
     public static   byte[]  ASCIIBytesArrayToHexByteArray(byte[] data) {
 
         String dataAsString = new String(data);
