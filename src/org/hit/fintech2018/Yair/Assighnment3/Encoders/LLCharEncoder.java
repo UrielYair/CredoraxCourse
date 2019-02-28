@@ -8,7 +8,6 @@ public class LLCharEncoder extends AbstractISO8583Encoder
 
     @Override
     public byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception{
-        // Same method as encode in LCharEncoder.
 
         return alphanumericEncoding(src,maxLength,isFixed,numOfLs);
     }

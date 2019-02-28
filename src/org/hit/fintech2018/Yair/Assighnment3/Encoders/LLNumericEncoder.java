@@ -8,7 +8,6 @@ public class LLNumericEncoder extends AbstractISO8583Encoder
 
     @Override
     public byte[] encode(byte[] src, int maxLength, boolean isFixed) throws Exception{
-        // Same method as encode in LNumeric.
 
         return numericEncoding(src,maxLength,isFixed,numOfLs);
     }
