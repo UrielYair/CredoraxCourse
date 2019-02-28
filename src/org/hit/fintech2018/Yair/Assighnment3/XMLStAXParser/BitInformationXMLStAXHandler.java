@@ -9,16 +9,14 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class BitInformationXMLStAXHandler
 {
-    private static final String FIELDS_FILE_NAME = "org/hit/fintech2018/Yair/Assighnment3/XMLStAXParser/ISO8583_BitFieldsInfo.xml";
-
+    private static final String FIELDS_FILE_NAME = "C:/Users/Uriel/Desktop/Credorax/src/org/hit/fintech2018/Yair/Assighnment3/XMLStAXParser/ISO8583_BitFieldsInfo.xml";
+    // TODO: fix file path.
     public static BitInformation getInformationBasedOnBitNumber(Integer bitNumber) {
-
-        boolean bRequestedField, bId, bLength, bFixed, bName, bClass;
-        bRequestedField = bId = bLength = bFixed = bName = bClass = false;
 
         try {
             String currentId = null;
@@ -49,66 +47,37 @@ public class BitInformationXMLStAXHandler
 
                 switch (event.getEventType()) {
 
-                    case XMLStreamConstants.START_ELEMENT:
+                    case XMLStreamConstants.START_ELEMENT: {
+
                         StartElement startElement = event.asStartElement();
                         String qName = startElement.getName().getLocalPart();
 
                         if (qName.equalsIgnoreCase("bitfield")) {
                             Iterator<Attribute> attributes = startElement.getAttributes();
-                            currentId = attributes.next().getValue();
-                            if (currentId.equals(bitNumber.toString()))
-                                bRequestedField = true;
-                        }
+                            Attribute currentAttribute;
+                            HashMap <String, String> bitInfo = new HashMap<>();
 
-                        if (qName.equalsIgnoreCase("id"))
-                            bId = true;
-                        if (qName.equalsIgnoreCase("length"))
-                            bLength = true;
-                        if (qName.equalsIgnoreCase("fixed"))
-                            bFixed = true;
-                        if (qName.equalsIgnoreCase("name"))
-                            bName = true;
-                        if (qName.equalsIgnoreCase("class"))
-                            bClass = true;
+                            while (attributes.hasNext()){
+                                currentAttribute = attributes.next();
+                                String keyName = currentAttribute.getName().toString();
+                                String value = currentAttribute.getValue();
+                                bitInfo.put(keyName,value);
+                            }
 
-                        break;
-
-                    case XMLStreamConstants.CHARACTERS:
-                        Characters characters = event.asCharacters();
-                        if (bId) {
-                            currentId = characters.getData();
-                            bId = false;
-                        }
-                        if (bLength) {
-                            length = Integer.parseInt(characters.getData());
-                            bLength = false;
-                        }
-                        if (bFixed) {
-                            fixed = characters.getData().equalsIgnoreCase("true");
-                            bFixed = false;
-                        }
-                        if (bName) {
-                            bitDescription = characters.getData();
-                            bName = false;
-                        }
-                        if (bClass) {
-                            classPath = characters.getData();
-                            bClass = false;
-                        }
-
-                        return new BitInformation(bitNumber, length, classPath, bitDescription, fixed);
-                    //break;
-
-                    case XMLStreamConstants.END_ELEMENT:
-                        EndElement endElement = event.asEndElement();
-                        if (endElement.getName().getLocalPart().equalsIgnoreCase(
-                                "bitfield") && bRequestedField) {
-                            bRequestedField = false;
+                            if (bitInfo.get("id").equals(bitNumber.toString())){
+                                return new BitInformation(
+                                        bitNumber,
+                                        Integer.parseInt(bitInfo.get("length")),
+                                        bitInfo.get("class"),
+                                        bitInfo.get("name"),
+                                        Boolean.parseBoolean(bitInfo.get("fixed")));
+                            }
                         }
                         break;
+                    }
                 }
-
             }
+            return new BitInformation(bitNumber, length, classPath, bitDescription, fixed);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();

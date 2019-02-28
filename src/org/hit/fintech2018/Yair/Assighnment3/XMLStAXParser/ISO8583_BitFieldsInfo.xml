@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
 <ISO8583Field>
-  <bitfield 
+  <bitfield
       id="0"
       length="4"
       fixed="true"
