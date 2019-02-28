@@ -249,35 +249,6 @@ public class Auxiliaries
     }
 
     // Converting methods:
-    public static   byte[]  hexStringToByteArray(String s) {
-
-        byte[] data = new byte[s.length() / 2];
-        for (int i = 0; i < s.length(); i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
-        }
-        return data;
-    }
-    public static   byte[]  stringToByteArray(String byteArrayAsString){
-        byte[] arrayToReturn = new byte[byteArrayAsString.length()];
-        for (int i = 0; i < byteArrayAsString.length(); i++) {
-            arrayToReturn[i] = (byte)((byteArrayAsString.charAt(i))-'0');
-        }
-        return arrayToReturn;
-
-    }
-    public static   String  byteArrayToHexString(byte[] array){
-        StringBuilder sb = new StringBuilder();
-        for (byte b : array) {
-            sb.append(String.format("%02X ", b));
-        }
-        return sb.toString();
-
-    }
-    public static   byte[]  stringToBytePackedArray(String byteArrayAsString) throws Exception{
-        byte[] stringAsByteArr = stringToByteArray(byteArrayAsString);
-        return packIntoPairsArray(stringAsByteArr);
-    }
     public static   byte[]  packIntoPairsArray(byte[] data) throws Exception{
         /**
          * Pack input to nibbles (packed bytes) .
@@ -322,15 +293,67 @@ public class Auxiliaries
         return arrayToReturn;
 
     }
+
+    public static   byte[]  ASCIIBytesArrayToHexByteArray(byte[] data) {
+
+        String dataAsString = new String(data);
+        byte[] toRet = new byte[dataAsString.length()];
+
+        for (int i=0; i<dataAsString.length() ;i++)
+            toRet[i] = (byte) dataAsString.charAt(i);
+
+        return toRet;
+
+
+        /*
+            For creating a string for this hex byte array:
+
+            StringBuilder sb = new StringBuilder();
+            for (int i=0;i<dataAsString.length();i++)
+                sb.append(Integer.toHexString((int) dataAsString.charAt(i)));
+            return sb.toString();
+        */
+
+        }
+    public static   byte[]  hexStringToByteArray(String s) {
+
+        byte[] data = new byte[s.length() / 2];
+        for (int i = 0; i < s.length(); i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
+    public static   byte[]  stringToBytePackedArray(String byteArrayAsString) throws Exception{
+        byte[] stringAsByteArr = stringToByteArray(byteArrayAsString);
+        return packIntoPairsArray(stringAsByteArr);
+    }
+    public static   byte[]  stringToByteArray(String byteArrayAsString){
+        byte[] arrayToReturn = new byte[byteArrayAsString.length()];
+        for (int i = 0; i < byteArrayAsString.length(); i++) {
+            arrayToReturn[i] = (byte)((byteArrayAsString.charAt(i))-'0');
+        }
+        return arrayToReturn;
+
+    }
     public static   String  convertByteArrayToASCIIString(byte[] src){
         /*
-        * Convert byte array values to ASCII characters.
-        * Input:    61 61 61 42 42 42 42
-        * Output:   aaaBBBB
-        * */
+         * Convert byte array values to ASCII characters.
+         * Input:    61 61 61 42 42 42 42
+         * Output:   aaaBBBB
+         * */
         char[] asciiCharactersOfBytesValue = new char[src.length];
         for (int i=0; i<src.length;i++)
             asciiCharactersOfBytesValue[i] = (char) src[i];
         return String.valueOf(asciiCharactersOfBytesValue);
     }
+    public static   String  byteArrayToHexString(byte[] array){
+        StringBuilder sb = new StringBuilder();
+        for (byte b : array) {
+            sb.append(String.format("%02X ", b));
+        }
+        return sb.toString();
+
+    }
+
 }

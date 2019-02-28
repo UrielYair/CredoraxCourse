@@ -7,10 +7,16 @@ public class HelpingMethods
 {
     public static byte[] alphanumericEncoding(byte[] src, int maxLength, boolean isFixed, int numOfLs) throws Exception {
         byte[] arrayToReturn = null;
+        arrayToReturn = ASCIIBytesArrayToHexByteArray(src);
 
         if (isFixed) {
-            arrayToReturn = rightPadding(src, maxLength, ' ');
-            return packIntoPairsArray(arrayToReturn);
+
+            if (arrayToReturn.length<=maxLength)
+                arrayToReturn = rightPadding(arrayToReturn, maxLength, ' ');
+            else
+                throw new Exception("The input array is too long for this bit field.");
+            return arrayToReturn;
+
         }
         else {
             // Concatenation of length as prefix
@@ -18,10 +24,9 @@ public class HelpingMethods
 
             byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length, numOfLs);
 
-            if (src.length % 2 != 0) src = rightPadding(src, src.length + 1, ' ');
-            src = packIntoPairsArray(src);
-
-            return byteArraysConcat(prefixLength, src);
+            if (arrayToReturn.length % 2 != 0)
+                arrayToReturn = rightPadding(arrayToReturn, src.length + 1, ' ');
+            return byteArraysConcat(prefixLength, arrayToReturn);
 
         }
     }
