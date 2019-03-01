@@ -3,13 +3,13 @@ package org.hit.fintech2018.Yair.Assighnment3;
 import org.hit.fintech2018.Yair.Assighnment3.Encoders.AbstractISO8583Encoder;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static org.hit.fintech2018.Yair.Assighnment3.XMLStAXParser.BitInformationXMLStAXHandler.getInformationBasedOnBitNumber;
-import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.getDigitsOfSpecificNumberInBytesArrayForm;
+import static org.hit.fintech2018.Yair.HelpingMethods.Auxiliaries.*;
 
 public class ISO8583Serializer implements IISO8583Serializer
 {
@@ -37,30 +37,43 @@ public class ISO8583Serializer implements IISO8583Serializer
         try {
             outputStream = new ByteArrayOutputStream( );
 
-            // Adding the MTID before all the data elements content of the message.
+            if (data.get(0) == null){
+                if (version>9999)
+                    throw new Exception("Message Type Indicator is too long");
+                byte[] MTID;
+                if (version>1000) {
+                    String MTIDStr = String.valueOf(version);
+                    MTID = new byte[]{ (byte) (MTIDStr.charAt(0)-'0'), (byte) (MTIDStr.charAt(1)-'0'), (byte) (MTIDStr.charAt(2)-'0'), (byte) (MTIDStr.charAt(3)-'0')};
+                }
+                else
+                    MTID = getDigitsOfSpecificNumberInBytesArrayForm(version);
+                data.put(0,MTID);
+                dataElements.add(0);
+            }
 
-            // Because of using ByteArrayOutputStream the program will convert the version number to byte array.
-            // For Example 1 --> {1}
-            outputStream.write(getDigitsOfSpecificNumberInBytesArrayForm(version));
-
+            TreeMap<Integer, byte[]> beforeConcatenation = new TreeMap<>();
             // For each of the DE's that found earlier,
             // will convert them as their preferences according to the ISO8583 standard.
             for (Integer i : dataElements) {
-                byte[] toAdd = getBytesFromDataElement(i, data.get(i));
                 // The method getBytesFromDataElement is responsible for fetching information about a specific DE.
                 // and run the appropriate conversion for it.
-
-                // The returned value will be added to the outputStream.
-                outputStream.write(toAdd);
+                byte[] toAdd = getBytesFromDataElement(i, data.get(i));
+                beforeConcatenation.put(i,toAdd);
             }
+
+            for(Map.Entry<Integer, byte[]> entry : beforeConcatenation.entrySet())
+                outputStream.write(entry.getValue());
+
+            byte[] finish = outputStream.toByteArray();
+            for (byte b: finish)
+                System.out.print((char) b);
+            System.out.println();
+            return finish;
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (outputStream ==null)    return null;
-        else
-            return outputStream.toByteArray( );
+        return null;
 
     }
     private List<Integer>   getElementsToProcess(byte[] data) {
@@ -71,7 +84,7 @@ public class ISO8583Serializer implements IISO8583Serializer
         List<Integer> elementsToReturn = new ArrayList<>();
         for (int i = 0; i < data.length; i++) {
             if (data[i]==1)
-                elementsToReturn.add(i);
+                elementsToReturn.add(i+1);
         }
         return elementsToReturn;
     }
