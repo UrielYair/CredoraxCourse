@@ -94,7 +94,7 @@ public class Auxiliaries
 
         return arrayToReturn;
     }
-    public static   byte[]  getDigitsOfSpecificNumberInBytesArrayForm(int length) throws Exception{
+    public static   byte[]  getDigitsOfSpecificNumberInBytesArrayForm(int size) throws Exception{
         /*
         * Input: int number represent length of value.
         * Output: byte array which represent the length.
@@ -110,65 +110,67 @@ public class Auxiliaries
         * input- 152
         * output-  {0,1,5,2}
         * */
-        if (length<0)   throw new Exception("value of length can not be negative.");
+        if (size<0)   throw new Exception("value of length can not be negative.");
 
-        String lengthString = String.valueOf(length);
-        int amountOfDigitsInLengthVariable =lengthString.length();
+        String hexString = Integer.toHexString(size);
+        int hexLength = hexString.length();
 
-        if (amountOfDigitsInLengthVariable>4)
+        if (hexLength>4)
             throw new Exception("Length value is not valid for ISO8583 data element");
 
-        switch (amountOfDigitsInLengthVariable)
+        switch (hexLength)
         {
             case 1: {
-                return new byte[]{(byte)length};
+                return new byte[]{(byte)(size-'0')};
                 // break;
             }
             case 2: {
-                return (new byte[]{ (byte) (lengthString.charAt(0)-'0'),
-                                    (byte) (lengthString.charAt(1)-'0')});
+                return (new byte[]{ (byte) (hexString.charAt(0)-'0'),
+                                    (byte) (hexString.charAt(1)-'0')});
                 //break;
             }
             case 3:{
-                return leftPadding((new byte[]{ (byte) (lengthString.charAt(0)-'0'),
-                                    (byte) (lengthString.charAt(1)-'0'),
-                                    (byte) (lengthString.charAt(2)-'0')}),4,'0');
+                return leftPadding((new byte[]{ (byte) (hexString.charAt(0)-'0'),
+                                    (byte) (hexString.charAt(1)-'0'),
+                                    (byte) (hexString.charAt(2)-'0')}),4,'0');
                 //break;
             }
         }
         return null;
     }
-    public static   byte[]  getPrefixForInputLengthBetween_L_LL_LLL(int srcArrayLength, int numOfLs) throws Exception{
+    public static   byte[]  getPrefixForInputLengthBetween_L_LL_LLL(int srcArraySize, int numOfLs) throws Exception{
         /*
         * The method will calculate the length prefix based on the class structure (amount of L's in the name of the class).
         *
         * for Example:
-        * Calling class is LLLCharEncoder (3 L's) and srcArrayLength is 56.
+        * Calling class is LLLCharEncoder (3 L's) and srcArraySize is 56.
         * Output: {0,0,5,6} - ( four bits that eventually will be packed )
         * - the leading 0 is left padding, and the reason for 4 bits long is to support length of 3 digits like 997.
         *   the padding is because of the later packing on the prefix.
         *
-        * Input: Calling class: LLNumericEncoder (2 L's) and srcArrayLength of 6.
+        * Input: Calling class: LLNumericEncoder (2 L's) and srcArraySize of 6.
         * Output: {06}
         * Output: If the calling class was LCharEncoder {06} - padding because of the later packing.
         * */
 
         if (numOfLs == 1){
-            if (srcArrayLength<10)
-                return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),2,'0'));
+            if (srcArraySize<10) {
+                return leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArraySize),2,'0');
+            }
             else
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
         else if (numOfLs == 2){
-            if (srcArrayLength<100){
-                return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),2,'0'));
+            if (srcArraySize<100){
+                return leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArraySize),2,'0');
             }
             else
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
         else if (numOfLs == 3){
-            if (srcArrayLength<1000)
-                return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),4,'0'));
+            if (srcArraySize<1000) {
+                return leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArraySize), 4, '0');
+            }
             else
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
@@ -179,13 +181,13 @@ public class Auxiliaries
 
     // Validation methods:
     public static   void    binaryValidation(byte[] src) throws Exception{
-        for (int i = 0; i < src.length; i++) {
-            if (src[i] < 0 || src[i] > 1) throw new Exception("Not in a valid binary format.");
+        for (byte b : src) {
+            if (b < 0 || b > 1) throw new Exception("Not in a valid binary format.");
         }
     }
     public static   void    numericValidation(byte[] src) throws Exception{
-        for (int i = 0; i < src.length; i++) {
-            if (src[i] < 0 || src[i] > 9) throw new Exception("Not in a valid numeric format.");
+        for (byte b : src) {
+            if (b < 0 || b > 9) throw new Exception("Not in a valid numeric format.");
         }
     }
 
@@ -257,7 +259,6 @@ public class Auxiliaries
         return arrayOfPairs;
     }
     public static   byte[]  unpackToBytesArray(byte[] data) {
-        // TODO: check what to do if data.length is odd.
         // Assuming 'data' comes as nibbles and will return as character of byte.
         /*
         * Input:            {A5,BF,30}
@@ -286,7 +287,7 @@ public class Auxiliaries
             String current4bit = binaryStr.substring(i*4,i*4+4);
             int decimal = Integer.parseInt(current4bit, 2);
             String hexStr = Integer.toString(decimal, 16).toUpperCase();
-            arrayToReturn[i] = (byte) hexStr.charAt(0);
+            arrayToReturn[i] = (byte) (hexStr.charAt(0) -'0');
         }
 
         return arrayToReturn;

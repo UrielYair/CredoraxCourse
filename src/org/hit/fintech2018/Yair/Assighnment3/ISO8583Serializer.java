@@ -58,18 +58,21 @@ public class ISO8583Serializer implements IISO8583Serializer
                 // The method getBytesFromDataElement is responsible for fetching information about a specific DE.
                 // and run the appropriate conversion for it.
                 byte[] toAdd = getBytesFromDataElement(i, data.get(i));
-
-                toAdd= packIntoPairsArray(toAdd);
                 beforeConcatenation.put(i,toAdd);
             }
 
-            for(Map.Entry<Integer, byte[]> entry : beforeConcatenation.entrySet())
-                outputStream.write(entry.getValue());
+            for(Map.Entry<Integer, byte[]> entry : beforeConcatenation.entrySet()) {
+                byte[] beforePacking = entry.getValue();
+
+                // For checking purposes:
+                for (byte b: beforePacking)
+                    System.out.print((char) ( b + '0'));
+
+                byte[] packed = packIntoPairsArray(beforePacking); // The actual packing.
+                outputStream.write(packed);
+            }
 
             byte[] finish = outputStream.toByteArray();
-            for (byte b: finish)
-                System.out.print((char) b);
-            System.out.println();
             return finish;
         }
         catch (Exception e) {

@@ -60,16 +60,14 @@ public class HelpingMethods
             // Concatenation of length as prefix
             // followed by the value of the data element.
 
-            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length, numOfLs);
+            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length/2, numOfLs);
+            //                                         Diving by 2 because of later packing. ^^^
 
             if (arrayToReturn.length % 2 != 0)
                 arrayToReturn = rightPadding(arrayToReturn, src.length + 1, ' ');
 
             byte[] result = byteArraysConcat(prefixLength, arrayToReturn);
 
-            int prefix = Integer.valueOf(String.valueOf(result[0]));
-            int x= 10*(prefix/16) + prefix%16;
-            result[0] = (byte)x;
             return result;
         }
     }
@@ -129,15 +127,12 @@ public class HelpingMethods
             // Concatenation of length as prefix
             // followed by the value of the data element.
 
-            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length, numOfLs);
+            byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length/2, numOfLs);
+            //                                         Diving by 2 because of later packing. ^^^
 
             if (src.length % 2 != 0) src = leftPadding(src, src.length + 1, '0');
 
             byte[] result = byteArraysConcat(prefixLength, src);
-
-            int prefix = Integer.valueOf(String.valueOf(result[0]));
-            int x= 10*(prefix/16) + prefix%16;
-            result[0] = (byte)x;
             return result;
 
         }
