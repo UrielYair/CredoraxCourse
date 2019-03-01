@@ -125,14 +125,14 @@ public class Auxiliaries
                 // break;
             }
             case 2: {
-                return (new byte[]{ (byte) lengthString.charAt(0),
-                                    (byte) lengthString.charAt(1)});
+                return (new byte[]{ (byte) (lengthString.charAt(0)-'0'),
+                                    (byte) (lengthString.charAt(1)-'0')});
                 //break;
             }
             case 3:{
-                return leftPadding((new byte[]{ (byte) lengthString.charAt(0),
-                                    (byte) lengthString.charAt(1),
-                                    (byte) lengthString.charAt(2)}),4,'0');
+                return leftPadding((new byte[]{ (byte) (lengthString.charAt(0)-'0'),
+                                    (byte) (lengthString.charAt(1)-'0'),
+                                    (byte) (lengthString.charAt(2)-'0')}),4,'0');
                 //break;
             }
         }
@@ -160,8 +160,9 @@ public class Auxiliaries
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
         else if (numOfLs == 2){
-            if (srcArrayLength<100)
+            if (srcArrayLength<100){
                 return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),2,'0'));
+            }
             else
                 throw new Exception("The array length of the input doesn't fit the bit field.");
         }
@@ -173,16 +174,7 @@ public class Auxiliaries
         }
         else
             throw new Exception("Number of L's: " + numOfLs + " is not defined in ISO8583 standard.");
-        /*
-        if (srcArrayLength<10)
-            return new byte[]{(byte) srcArrayLength};
-        else if (10<=srcArrayLength && srcArrayLength<100)
-            return packIntoPairsArray(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength));
-        else if (srcArrayLength<1000)
-            return packIntoPairsArray(leftPadding(getDigitsOfSpecificNumberInBytesArrayForm(srcArrayLength),4,'0'));
-        else
-            throw new Exception("length of: " + srcArrayLength + " can not be a prefix length in ISO8583 standard." );
-        */
+
     }
 
     // Validation methods:
@@ -261,7 +253,7 @@ public class Auxiliaries
         if (data.length%2!=0) data = leftPadding(data,data.length+1,'0');
         byte[] arrayOfPairs = new byte[data.length / 2];
         for (int i = 0; i < data.length; i+=2)
-            arrayOfPairs[i/2] = (byte) ((data[i] << 4) | (data[i+1] & 0x0F));
+            arrayOfPairs[i/2] =  (byte) ((byte)(data[i] << 4) | (byte)(data[i+1]));
         return arrayOfPairs;
     }
     public static   byte[]  unpackToBytesArray(byte[] data) {
@@ -310,16 +302,6 @@ public class Auxiliaries
 
         return toRet;
 
-
-        /*
-            For creating a string for this hex byte array:
-
-            StringBuilder sb = new StringBuilder();
-            for (int i=0;i<dataAsString.length();i++)
-                sb.append(Integer.toHexString((int) dataAsString.charAt(i)));
-            return sb.toString();
-        */
-
         }
     public static   byte[]  hexStringToByteArray(String s) {
 
@@ -359,6 +341,25 @@ public class Auxiliaries
             sb.append(String.format("%02X ", b));
         }
         return sb.toString();
+
+    }
+    public static   String  toStringOfHexArray(byte[] data){
+        /*
+        String dataAsString = new String(data);
+        //For creating a string for this hex byte array:
+
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<dataAsString.length();i++)
+            sb.append(Integer.toHexString((int) dataAsString.charAt(i)));
+        return sb.toString();
+        */
+
+
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<data.length;i++)
+            sb.append(String.format("%02X ",  data[i]));
+        String result = sb.toString();
+        return result;
 
     }
 
