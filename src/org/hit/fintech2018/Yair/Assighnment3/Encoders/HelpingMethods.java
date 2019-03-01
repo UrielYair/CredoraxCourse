@@ -15,8 +15,6 @@ public class HelpingMethods
          * Notes:                                                                                       *
          * 1. The returned values will be padded - if needed (right padding with spaces).               *
          * 2. Can handle fixed length or not.                                                           *
-         * 3. The returned bytes will be packed.                                                        *
-         * 4. The prefix will be divided by 2 because of packing the byte array.                        *
          *                                                                                              *
          * ******************************************************************************************** *
          *                                          Examples:                                           *
@@ -86,8 +84,6 @@ public class HelpingMethods
          * Notes:                                                                                       *
          * 1. The returned values will be padded - if needed (left padding with zeros).                 *
          * 2. Can handle fixed length or not.                                                           *
-         * 3. The returned bytes will be packed.                                                        *
-         * 4. The prefix will be divided by 2 because of packing the byte array.                        *
          *                                                                                              *
          * ******************************************************************************************** *
          *                                          Examples:                                           *
@@ -127,7 +123,7 @@ public class HelpingMethods
             else
                 throw new Exception("The input array is too long for this bit field.");
 
-            return packIntoPairsArray(arrayToReturn);
+            return arrayToReturn;
         }
         else {
             // Concatenation of length as prefix
@@ -136,7 +132,6 @@ public class HelpingMethods
             byte[] prefixLength = getPrefixForInputLengthBetween_L_LL_LLL(src.length, numOfLs);
 
             if (src.length % 2 != 0) src = leftPadding(src, src.length + 1, '0');
-            src = packIntoPairsArray(src);
 
             byte[] result = byteArraysConcat(prefixLength, src);
 

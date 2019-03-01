@@ -43,10 +43,7 @@ public class AmountEncoder extends AbstractISO8583Encoder
         // Data concatenation:
         byte[] arrayToReturn = byteArraysConcat(currencyCode,amountOfMoneyRepresentedInBits);
 
-        // Bits packing:
-        arrayToReturn = packIntoPairsArray(arrayToReturn);
-
-        if (arrayToReturn.length > maxLength/2) // The reason for dividing by 2 is because the program pack the bits.
+        if (arrayToReturn.length > maxLength)
             throw new Exception("Value of amount of money have too many bits.");
 
         return arrayToReturn;
